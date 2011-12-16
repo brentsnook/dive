@@ -11,7 +11,7 @@ module Dive
   
   def dive_deep location
     matches = location.match /([^\[\]]*)\[(.*)\]/
-    matches ? continue_dive(matches[1], matches[2]) : nil
+    matches ? continue_dive(matches[1].strip, matches[2].strip) : nil
   end
   
   def continue_dive key, remainder

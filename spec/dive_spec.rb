@@ -24,7 +24,11 @@ describe Dive do
     hash.dive('first[second]').should == 'deep value'
   end
   
-  it 'ignores space around location parts'
+  it 'ignores space around location parts' do
+    hash = {'first' => {'second' => {'third' => 'deep value'}}}
+    hash.dive('first  [  second [  third  ] ] ').should == 'deep value'
+  end
+  
   it 'returns nil if a value at any part of the location can not dive'
   it 'retrieves string keys before symbols'
 end
