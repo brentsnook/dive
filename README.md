@@ -6,15 +6,19 @@ Check out the specs for how it behaves.
 
 ### Installation and usage
 
-  gem install dive
+```ruby
+gem install dive
 
-  require 'dive'
-  foods {:sausages => {:pork_and_fennel => 'DELICIOUS'}}
-  foods['sausages[pork_and_fennel]']
+require 'dive'
+foods {:sausages => {:pork_and_fennel => 'DELICIOUS'}}
+foods['sausages[pork_and_fennel]']
+```
 
 Or if you become squeamish at the idea of overriding Hash's [] method:
 
-  require 'dive/noninvasive'
-  foods.dive 'sausages[pork_and_fennel]'
+```ruby
+require 'dive/noninvasive'
+foods.dive 'sausages[pork_and_fennel]'
+```
 
 Wuss.
