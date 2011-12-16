@@ -20,5 +20,3 @@ Or if you become squeamish at the idea of overriding Hash's [] method:
 require 'dive/noninvasive'
 foods.dive 'sausages[pork_and_fennel]'
 ```
-
-Wuss.
