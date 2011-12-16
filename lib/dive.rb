@@ -16,7 +16,7 @@ module Dive
   
   def continue_dive key, remainder
     value = self[key] || self[key.to_sym]
-    value.dive remainder
+    value.dive(remainder) if value.respond_to?(:dive)
   end
 end
 
