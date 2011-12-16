@@ -1,25 +1,2 @@
-require "dive/version"
-
-module Dive
-  
-  def dive location
-    value = self[location] || self[location.to_sym]
-    value || dive_deep(location)
-  end
-  
-  private
-  
-  def dive_deep location
-    matches = location.match /([^\[\]]*)\[(.*)\]/
-    matches ? continue_dive(matches[1].strip, matches[2].strip) : nil
-  end
-  
-  def continue_dive key, remainder
-    value = self[key] || self[key.to_sym]
-    value.dive(remainder) if value.respond_to?(:dive)
-  end
-end
-
-class Hash
-  include Dive
-end
+require 'dive/noninvasive'
+Hash.send :include, Dive::Extensions

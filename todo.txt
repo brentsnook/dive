@@ -1,11 +1,7 @@
-- if there is no key, treat it as a deep key
-  - snap off start of key and use it to retrieve value
-    - first look for string, if key not there look for symbol, otherwise nil
-  - if there is any key left and object responds to dive, pass on remainder of key
-  - else return nil
 - add dive method with require 'dive/noninvasive' - doesn't override []
 - allow override of Hash [] by require 'dive'
 - finish readme
+- exploratory testing
 - test with 1.8.7
 - update change log
 - publish to gem repo
