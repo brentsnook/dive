@@ -1,3 +1,5 @@
+require File.dirname(__FILE__) + '/spec_helper'
+
 describe Hash, 'when extended' do
   
   it 'performs a dive on []' do
