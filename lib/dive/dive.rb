@@ -9,12 +9,16 @@ module Dive
     end
   
     def dive location
-      value = old_access(location)
-      value = old_access(location.to_sym) if default?(value) && location.respond_to?(:to_sym)
+      value = indifferent_access location 
       default?(value) ? dive_deep(location) : value
     end
     
     private
+    
+    def indifferent_access key
+      value = old_access key
+      default?(value) && key.respond_to?(:to_sym) ? old_access(key.to_sym) : value 
+    end
     
     def default? value
       value == default
@@ -22,10 +26,10 @@ module Dive
     
     def dive_deep location
       matches = location.to_s.match /([^\[\]]*)\[(.*)\]/
+      
       return default unless matches
       key, remainder = matches[1].strip, matches[2].strip
-      value = old_access key
-      value = old_access(key.to_sym) if default?(value) && key.respond_to?(:to_sym)
+      value = indifferent_access key
       value.respond_to?(:dive) ? value.dive(remainder) : default
     end
   end
