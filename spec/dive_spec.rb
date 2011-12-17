@@ -24,10 +24,8 @@ describe Dive do
     end
 
     it 'ignores space around location parts' do
-      pending do
-        hash = {'first' => {'second' => {'third' => 'deep value'}}}
-        hash.dive('first  [  second [  third  ] ] ').should == 'deep value'
-      end
+      hash = {'first' => {'second' => {'third' => 'deep value'}}}
+      hash.dive('first  [  second [  third  ] ] ').should == 'deep value'
     end
 
     describe "when a value at any part of the location doesn't exist and default is nil" do

@@ -23,7 +23,7 @@ module Dive
     def dive_deep location
       matches = location.to_s.match /([^\[\]]*)\[(.*)\]/
       return default unless matches
-      key, remainder = matches[1], matches[2]
+      key, remainder = matches[1].strip, matches[2].strip
       value = old_access key
       value = old_access(key.to_sym) if default?(value) && key.respond_to?(:to_sym)
       value.respond_to?(:dive) ? value.dive(remainder) : default
