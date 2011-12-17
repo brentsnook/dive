@@ -10,4 +10,6 @@ describe Hash, 'when extended' do
   it "allows keys that aren't strings or symbols" do
     {['array'] => 'value'}[['array']].should == 'value'
   end
+  
+    it 'handles a nil key'
 end

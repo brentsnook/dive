@@ -9,20 +9,18 @@ module Dive
     end
   
     def dive location
-      value = old_access(location) || (old_access(location.to_sym) if location.respond_to?(:to_sym))
-      value || dive_deep(location)
+      value = old_access(location)
+      value == default ? dive_deep(location) : value
     end
     
     private
-  
+    
     def dive_deep location
       matches = location.to_s.match /([^\[\]]*)\[(.*)\]/
-      matches ? continue_dive(matches[1].strip, matches[2].strip) : nil
-    end
-  
-    def continue_dive key, remainder
-      value = old_access(key) || old_access(key.to_sym)
-      value.dive(remainder) if value.respond_to?(:dive)
+      return default unless matches
+      key, remainder = matches[1], matches[2]
+      value = old_access key
+      value.respond_to?(:dive) ? value.dive(remainder) : default
     end
   end
   
