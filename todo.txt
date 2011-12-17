@@ -1,3 +1,4 @@
+- support default_proc
 - finish readme
 - exploratory testing
 - test with 1.8.7

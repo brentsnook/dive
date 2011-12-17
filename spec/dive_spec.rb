@@ -28,11 +28,10 @@ describe Dive do
       hash.dive('first  [  second [  third  ] ] ').should == 'deep value'
     end
 
-    describe "when a value at any part of the location doesn't exist and default is nil" do
-      it 'retrieves the default value' do
-        hash = Hash.new nil
-        hash['first'] = {'second' => {'third' => 'deep value'}}
-        hash.dive('first[second[idontexist]]').should be_nil
+    describe "when a value at any part of the location doesn't exist" do
+      it 'retrieves the default value of the hash where no key was found' do
+        hash = {'first' => {'second' => Hash.new('default')}}
+        hash.dive('first[second[idontexist]]').should == 'default'
       end
     end
     
@@ -44,10 +43,11 @@ describe Dive do
     end
 
     describe 'when a value at any part of the location can not dive' do
-      it 'retrieves the default value' do
-        hash = Hash.new nil
-        hash['first'] = {'second' => "cantdive"}
-        hash.dive('first[second[cantdive[fourth]]]').should be_nil
+      it 'retrieves the default value of the hash containing the non-divable value' do
+        nested_hash = Hash.new 'default'
+        nested_hash['second'] = 'cantdive'
+        hash = {'first' => nested_hash}
+        hash.dive('first[second[cantdive[fourth]]]').should == 'default'
       end
     end
     
