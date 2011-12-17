@@ -10,7 +10,7 @@ module Dive
   
     def dive location
       value = indifferent_access location 
-      default?(value) ? dive_deep(location) : value
+      default?(value) ? dive_if_possible(location) : value
     end
     
     private
@@ -24,11 +24,12 @@ module Dive
       value == default
     end
     
-    def dive_deep location
+    def dive_if_possible location
       matches = location.to_s.match /([^\[\]]*)\[(.*)\]/
-      
-      return default unless matches
-      key, remainder = matches[1].strip, matches[2].strip
+      matches ? dive_deep(matches[1].strip, matches[2].strip) : default
+    end
+    
+    def dive_deep key, remainder
       value = indifferent_access key
       value.respond_to?(:dive) ? value.dive(remainder) : default
     end
