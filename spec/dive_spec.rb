@@ -19,10 +19,8 @@ describe Dive do
     end
     
     it 'retrieves values that have a symbol as key' do
-      pending do
-        hash = {:first => {:second => 'deep value'}}
-        hash.dive('first[second]').should == 'deep value'
-      end
+      hash = {:first => {:second => 'deep value'}}
+      hash.dive('first[second]').should == 'deep value'
     end
 
     it 'ignores space around location parts' do
