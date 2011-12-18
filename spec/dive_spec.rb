@@ -20,7 +20,7 @@ describe Dive do
     
     it 'retrieves values that have a symbol as key' do
       hash = {:first => {:second => 'deep value'}}
-      hash.dive('first[second]').should == 'deep value'
+      hash.dive(':first[:second]').should == 'deep value'
     end
 
     it 'ignores space around location parts' do
@@ -32,13 +32,6 @@ describe Dive do
       it 'retrieves the default value of the hash where no key was found' do
         hash = {'first' => {'second' => Hash.new('default')}}
         hash.dive('first[second[idontexist]]').should == 'default'
-      end
-    end
-    
-    describe "when a string key and it's symbol equivalent both exist" do
-      it 'retrieves the string value' do
-        hash = {'first' => {'second' => 'string value', :second => 'symbol value'}}
-        hash.dive('first[second]').should == 'string value'
       end
     end
 
@@ -72,11 +65,11 @@ describe Dive do
       end
     end
     
-    describe 'when no normal key or dive location exists and default is nil' do
+    describe 'when no normal key or dive location exists' do
       it 'retrieves the default value' do
-        hash = Hash.new nil
+        hash = Hash.new 'default'
         hash['first'] = 'value'
-        hash.dive('idontexist').should be_nil
+        hash.dive('idontexist').should == 'default'
       end
     end
     

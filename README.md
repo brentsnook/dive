@@ -68,7 +68,7 @@ I wanted to be able to do something like this:
 ```ruby
 fields = {
   'Name' => :sausage_name,
-  'Spices' => 'ingredients[filling[spices]]'
+  'Spices' => ':ingredients[:filling[:spices]]'
 }
 ```
 
@@ -83,12 +83,12 @@ gem install dive
 
 require 'dive'
 foods = { :sausages => {:pork_and_fennel => 'DELICIOUS'}}
-foods['sausages[pork_and_fennel]']
+foods[':sausages[:pork_and_fennel]']
 ```
 
 Or if you become squeamish at the idea of overriding Hash's [] method:
 
 ```ruby
 require 'dive/noninvasive'
-foods.dive 'sausages[pork_and_fennel]'
+foods.dive ':sausages[:pork_and_fennel]'
 ```

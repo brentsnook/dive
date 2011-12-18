@@ -9,19 +9,22 @@ module Dive
     end
   
     def dive location
-      value = indifferent_access location 
-      default?(value, location) ? dive_if_possible(location) : value
+      has_key?(location) ? old_access(location) : dive_access(location)
     end
     
     private
     
-    def indifferent_access key
-      value = old_access key
-      default?(value, key) && key.respond_to?(:to_sym) ? old_access(key.to_sym) : value 
+    def dive_access location
+      has_key?(symbolise(location)) ? blah_access(symbolise(location)) : dive_if_possible(location)
     end
     
-    def default? value, key
-      value == default_value(key)
+    def blah_access location
+      old_access symbolise(location)
+    end
+    
+    def symbolise key
+      is_symbol = key.respond_to?(:to_sym) && key[0] == ':'
+      is_symbol ? key[1..-1].to_sym : key
     end
     
     def default_value key
@@ -34,7 +37,7 @@ module Dive
     end
     
     def dive_deep key, remainder
-      value = indifferent_access key
+      value = blah_access key
       value.respond_to?(:dive) ? value.dive(remainder) : default_value(remainder)
     end
   end
