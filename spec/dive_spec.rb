@@ -42,12 +42,33 @@ describe Dive do
       end
     end
 
-    describe 'when a value at any part of the location can not dive' do
-      it 'retrieves the default value of the hash containing the non-divable value' do
-        nested_hash = Hash.new 'default'
-        nested_hash['second'] = 'cantdive'
-        hash = {'first' => nested_hash}
-        hash.dive('first[second[cantdive[fourth]]]').should == 'default'
+    describe 'when a hash at any part of the location can not dive' do
+      
+      before do
+        @hash = {'first' => {'second' => 'cantdive'}}
+      end
+      
+      describe 'when that hash was created with a default value' do
+        it 'retrieves the default value' do
+          @hash['first'].default = 'default'
+          @hash.dive('first[second[cantdive[fourth]]]').should == 'default'
+        end
+      end
+      
+      describe 'when that hash was created with a default proc' do
+        
+        before do
+          @hash['first'].default_proc = proc { |hash, key| "default proc: #{key}"}
+          @result = @hash.dive('first[second[cantdive[fourth]]]')
+        end
+      
+        it 'retrieves the result of evaluating the default proc' do
+          @result.should include('default proc')
+        end
+      
+        it 'uses the remainder of the location as the proc key' do
+          @result.should include('cantdive[fourth]')
+        end
       end
     end
     
@@ -59,7 +80,7 @@ describe Dive do
       end
     end
     
-    it 'still dives when the default value is not nil' do
+    it 'still attempts to dive when the default value is not nil' do
       hash = Hash.new 'default'
       hash['first'] = {'second' => 'deep value'}
       hash.dive('first[second]').should == 'deep value'
