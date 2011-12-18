@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 
 describe Dive do
   
-  describe 'diving' do
+  describe 'reading' do
     
     describe 'with a location that matches a normal key' do
       it 'retrieves the normal value' do

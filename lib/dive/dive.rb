@@ -2,7 +2,7 @@ require 'dive/version'
 
 module Dive
   
-  module Core
+  module Read
     
     def self.included clazz
       clazz.send :alias_method, :old_access, :[]
