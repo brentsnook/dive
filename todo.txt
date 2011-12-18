@@ -1,4 +1,4 @@
-- finish readme
+- allow setting of key with hash.dive('thing[x]') = 'value'
 - exploratory testing
 - test with 1.8.7
 - update change log
@@ -7,6 +7,5 @@
 -- LATER --
 
 - add support for arrays
-- allow setting of key with hash.dive('thing[x]') = 'value'
 - add can_dive? method - checks if there is a key
 - normal override overrides has_key? also

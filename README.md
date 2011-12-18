@@ -28,7 +28,7 @@ end
 ```
 
 ```ruby
-response
+@response
 { 
   :sausages => [
     {
@@ -46,15 +46,17 @@ response
 All fine and dandy until I had to map to values that were nested under the first level of the response:
 
 ```ruby
-response
+@response
 { 
   :sausages => [
     {
 	  :name => 'Pork + Fennel'
       :ingredients => {
 	    :casing => 'intestine',
-	    :filling => 'pork mince',
-	    :spices => 'fennel'
+	    :filling => {
+	      :meat => 'pork mince',
+	      :spices => 'fennel'
+	    }
       }
     }
   ]
@@ -66,7 +68,7 @@ I wanted to be able to do something like this:
 ```ruby
 fields = {
   'Name' => :sausage_name,
-  'Casing' => 'ingredients[casing]'
+  'Spices' => 'ingredients[filling[spices]]'
 }
 ```
 
