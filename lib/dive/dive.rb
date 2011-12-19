@@ -2,26 +2,20 @@ require 'dive/version'
 
 module Dive
   
+  def symbolise key
+    is_symbol = key.respond_to?(:to_sym) && key[0] == ':'
+    is_symbol ? key[1..-1].to_sym : key
+  end
+    
   module Read
     
     def self.included clazz
+      clazz.send :include, Dive
       clazz.send :alias_method, :old_access, :[]
-      clazz.send :alias_method, :old_store, :[]=
     end
   
     def dive location
       has_key?(location) ? old_access(location) : dive_access(location)
-    end
-    
-    def dive_store location, value
-      matches = location.to_s.match /([^\[\]]*)\[(.*)\]/
-      matches ? pass_on(matches[1], matches[2], value): old_store(symbolise(location), value)
-    end
-    
-    def pass_on(key, remainder, value)
-      storer = has_key?(symbolise(key)) ? old_access(symbolise(key)) : {}
-      old_store symbolise(key), storer
-      storer.dive_store remainder, value
     end
     
     private
@@ -32,11 +26,6 @@ module Dive
     
     def blah_access location
       old_access symbolise(location)
-    end
-    
-    def symbolise key
-      is_symbol = key.respond_to?(:to_sym) && key[0] == ':'
-      is_symbol ? key[1..-1].to_sym : key
     end
     
     def default_value key
@@ -52,6 +41,28 @@ module Dive
       value = blah_access key
       value.respond_to?(:dive) ? value.dive(remainder) : default_value(remainder)
     end
+  end
+  
+  module Write
+    
+    def self.included clazz
+      clazz.send :include, Dive
+      clazz.send :alias_method, :old_store, :[]=
+    end
+    
+    def dive_store location, value
+      matches = location.to_s.match /([^\[\]]*)\[(.*)\]/
+      matches ? pass_on(matches[1], matches[2], value): old_store(symbolise(location), value)
+    end
+    
+    private
+    
+    def pass_on(key, remainder, value)
+      storer = has_key?(symbolise(key)) ? old_access(symbolise(key)) : {}
+      old_store symbolise(key), storer
+      storer.dive_store remainder, value
+    end
+    
   end
   
   module Extensions
