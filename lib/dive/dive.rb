@@ -19,8 +19,9 @@ module Dive
     end
     
     def pass_on(key, remainder, value)
-      storer = old_access(symbolise(key))
-      storer.old_store remainder, value
+      storer = has_key?(symbolise(key)) ? old_access(symbolise(key)) : {}
+      old_store symbolise(key), storer
+      storer.dive_store remainder, value
     end
     
     private

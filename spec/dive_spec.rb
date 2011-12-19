@@ -81,14 +81,30 @@ describe Dive do
   end
   
   describe 'writing' do
-    describe 'with a location that matches a deep key' do
-      it 'sets the deep value' do
+    describe 'with a deep location' do
+      it 'sets a deep value' do
         nested_hash = {'third' => 'deep value'}
         hash = {'first' => {'second' => nested_hash}}
         
         hash.dive_store('first[second[third]]', 'deep value')
         
         nested_hash['third'].should == 'deep value'
+      end
+    end
+    
+    describe 'with a normal location' do
+      it 'sets a normal value' do
+        hash = {}
+        hash.dive_store('normal', 'normal value')
+        hash['normal'].should == 'normal value'
+      end
+    end
+    
+    describe "when parts of the location don't exist" do
+      it "creates each part as a new Hash" do
+        hash = {}
+        hash.dive_store('first[second[third]]', 'value')
+        hash['first']['second']['third'].should == 'value'
       end
     end
   end
