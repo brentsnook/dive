@@ -7,6 +7,12 @@ describe Hash, 'when extended' do
     hash['first[second[third]]'].should == 'deep value'
   end
   
+  it 'performs a dive store on []=' do
+    hash = {'first' => {}}
+    hash['first[second]'] = 'deep value'
+    hash['first']['second'].should == 'deep value'
+  end
+  
   it "allows keys that aren't strings or symbols" do
     {['array'] => 'value'}[['array']].should == 'value'
   end

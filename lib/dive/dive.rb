@@ -57,6 +57,7 @@ module Dive
   module Extensions
     def self.included clazz
       clazz.send :alias_method, :[], :dive
+      clazz.send :alias_method, :[]=, :dive_store
     end
   end
 end
