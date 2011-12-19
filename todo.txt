@@ -1,6 +1,5 @@
-- remove indifferent access, if key starts with a ':' then to_sym it
-
 - allow setting of key with hash.dive('thing[x]') = 'value'
+- tidy up method names
 - exploratory testing
 - test with 1.8.7
 - update change log

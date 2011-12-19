@@ -6,10 +6,21 @@ module Dive
     
     def self.included clazz
       clazz.send :alias_method, :old_access, :[]
+      clazz.send :alias_method, :old_store, :[]=
     end
   
     def dive location
       has_key?(location) ? old_access(location) : dive_access(location)
+    end
+    
+    def dive_store location, value
+      matches = location.to_s.match /([^\[\]]*)\[(.*)\]/
+      matches ? pass_on(matches[1], matches[2], value): old_store(symbolise(location), value)
+    end
+    
+    def pass_on(key, remainder, value)
+      storer = old_access(symbolise(key))
+      storer.old_store remainder, value
     end
     
     private

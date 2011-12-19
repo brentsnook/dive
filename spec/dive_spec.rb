@@ -80,4 +80,16 @@ describe Dive do
     end
   end
   
+  describe 'writing' do
+    describe 'with a location that matches a deep key' do
+      it 'sets the deep value' do
+        nested_hash = {'third' => 'deep value'}
+        hash = {'first' => {'second' => nested_hash}}
+        
+        hash.dive_store('first[second[third]]', 'deep value')
+        
+        nested_hash['third'].should == 'deep value'
+      end
+    end
+  end
 end
