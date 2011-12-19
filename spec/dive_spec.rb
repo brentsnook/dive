@@ -95,17 +95,23 @@ describe Dive do
     describe 'with a normal location' do
       it 'sets a normal value' do
         hash = {}
-        hash.dive_store('normal', 'normal value')
+        hash.dive_store 'normal', 'normal value'
         hash['normal'].should == 'normal value'
       end
     end
     
     describe "when parts of the location don't exist" do
-      it "creates each part as a new Hash" do
+      it 'creates each part as a new Hash' do
         hash = {}
-        hash.dive_store('first[second[third]]', 'value')
+        hash.dive_store 'first[second[third]]', 'value'
         hash['first']['second']['third'].should == 'value'
       end
+    end
+    
+    it 'recognises symbol keys' do
+      hash = {:first => {}}
+      hash.dive_store ':first[:second]', 'value'
+      hash[:first][:second].should == 'value'
     end
   end
 end
