@@ -108,6 +108,13 @@ describe Dive do
       end
     end
     
+    describe 'when the value at the end of a location is not divable' do
+      it 'raises a NoMethodError' do
+        hash = {'first' => 'not divable'}
+        lambda { hash.dive_store 'first[second]', 'value' }.should raise_exception(NoMethodError)
+      end
+    end
+    
     it 'recognises symbol keys' do
       hash = {:first => {}}
       hash.dive_store ':first[:second]', 'value'

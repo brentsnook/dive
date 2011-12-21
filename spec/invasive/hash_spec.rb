@@ -17,7 +17,7 @@ describe Hash, 'when extended' do
     {['array'] => 'value'}[['array']].should == 'value'
   end
   
-  it 'handles a nil key' do
+  it 'allows a nil key' do
     hash = {:x => :y}
     hash[nil].should == hash.default    
   end
