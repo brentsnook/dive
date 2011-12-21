@@ -15,34 +15,30 @@ module Dive
   module Read
     
     def self.included clazz
-      clazz.send :alias_method, :old_access, :[]
+      clazz.send :alias_method, :old_read, :[]
     end
   
     def dive location
-      has_key?(location) ? old_access(location) : dive_access(location)
+      has_key?(location) ? old_read(location) : dive_read(location)
     end
     
     private
     
-    def dive_access location
-      has_key?(symbolise(location)) ? blah_access(symbolise(location)) : dive_if_possible(location)
-    end
-    
-    def blah_access location
-      old_access symbolise(location)
+    def dive_read location
+      has_key?(symbolise(location)) ? old_read(symbolise(location)) : attempt_dive(location)
     end
     
     def default_value key
       default_proc ? default_proc.call(self, key) : default
     end 
     
-    def dive_if_possible location
-      matches = location.to_s.match /([^\[\]]*)\[(.*)\]/
-      matches ? dive_deep(matches[1].strip, matches[2].strip) : default_value(location)
+    def attempt_dive location
+      matches = location.to_s.match /([^\[\]]*)\[(.*)\]/ #(key)[(remainder)]
+      matches ? dive_to_next_level(matches[1].strip, matches[2].strip) : default_value(location)
     end
     
-    def dive_deep key, remainder
-      value = blah_access key
+    def dive_to_next_level key, remainder
+      value = old_read(symbolise(key))
       value.respond_to?(:dive) ? value.dive(remainder) : default_value(remainder)
     end
   end
@@ -55,13 +51,13 @@ module Dive
     
     def dive_store location, value
       matches = location.to_s.match /([^\[\]]*)\[(.*)\]/
-      matches ? pass_on(matches[1], matches[2], value): old_store(symbolise(location), value)
+      matches ? store_at_next_level(matches[1], matches[2], value): old_store(symbolise(location), value)
     end
     
     private
     
-    def pass_on(key, remainder, value)
-      storer = has_key?(symbolise(key)) ? old_access(symbolise(key)) : {}
+    def store_at_next_level(key, remainder, value)
+      storer = has_key?(symbolise(key)) ? old_read(symbolise(key)) : {}
       old_store symbolise(key), storer
       storer.dive_store remainder, value
     end
