@@ -2,6 +2,11 @@ require 'dive/version'
 
 module Dive
   
+  def self.included clazz
+    clazz.send :include, Read
+    clazz.send :include, Write
+  end
+  
   def symbolise key
     is_symbol = key.respond_to?(:to_sym) && key[0] == ':'
     is_symbol ? key[1..-1].to_sym : key
@@ -10,7 +15,6 @@ module Dive
   module Read
     
     def self.included clazz
-      clazz.send :include, Dive
       clazz.send :alias_method, :old_access, :[]
     end
   
@@ -46,7 +50,6 @@ module Dive
   module Write
     
     def self.included clazz
-      clazz.send :include, Dive
       clazz.send :alias_method, :old_store, :[]=
     end
     
