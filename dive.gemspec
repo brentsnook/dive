@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["brent@fuglylogic.com"]
   s.homepage    = "http://github.com/brentsnook/dive"
   s.summary     = %q{A gem for accessing values within nested Hashes}
-  s.description = %q{For example: {:sausages => {:pork_and_fennel => 'DELICIOUS'}}[':sausages[:pork_and_fennel]']}
+  s.description = %q{A gem for accessing values within nested Hashes. For example: {:sausages => {:pork_and_fennel => 'DELICIOUS'}}[':sausages[:pork_and_fennel]']}
 
   s.rubyforge_project = "dive"
 
