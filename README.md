@@ -92,3 +92,9 @@ Or if you become squeamish at the idea of overriding Hash's [] method:
 require 'dive/noninvasive'
 foods.dive ':sausages[:pork_and_fennel]'
 ```
+
+### Issues
+  
+* Currently only works with Ruby 1.9
+* May not play well with other code that overrides core methods - my yardstick for this is enabling dive in the rspec builds and having them pass. Fails horribly at the moment
+
