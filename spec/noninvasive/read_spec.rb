@@ -49,7 +49,9 @@ describe Dive, 'when reading' do
     describe 'when that hash was created with a default proc' do
       
       before do
-        @hash['first'].default_proc = proc { |hash, key| "default proc: #{key}"}
+        first = Hash.new { |hash, key| "default proc: #{key}"}
+        first['second'] = 'cantdive'
+        @hash['first'] = first
         @result = @hash.dive('first[second[cantdive[fourth]]]')
       end
     

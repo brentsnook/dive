@@ -7,9 +7,13 @@ module Dive
     clazz.send :include, Write
   end
   
+  def as_symbol key
+    key_string = key.to_s
+    (key_string[0, 1] == ':') ? key_string[1..-1].to_sym : key
+  end
+  
   def symbolise key
-    is_symbol = key.respond_to?(:to_sym) && key[0] == ':'
-    is_symbol ? key[1..-1].to_sym : key
+    key.is_a?(Symbol) ? key : as_symbol(key)
   end
     
   module Read

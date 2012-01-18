@@ -76,6 +76,8 @@ So I did.
 
 Check out the specs for how it behaves.
 
+Dive have been tested with ruby 1.9.2 and 1.8.7.
+
 ### Installation and usage
 
 ```ruby
@@ -94,7 +96,6 @@ foods.dive ':sausages[:pork_and_fennel]'
 ```
 
 ### Issues
-  
-* Currently only works with Ruby 1.9
+
 * May not play well with other code that overrides core methods - my yardstick for this is enabling dive in the rspec builds and having them pass. Fails horribly at the moment
 
