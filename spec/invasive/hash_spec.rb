@@ -21,4 +21,11 @@ describe Hash, 'when extended' do
     hash = {:x => :y}
     hash[nil].should == hash.default    
   end
+  
+  # real example from rspec build that made everything explode
+  it "doesn't retrieve top level hash keyed with an empty string" do
+    # location of :[]= was resolving to first and second level key of ''
+    # rspec had actual values keyed against this so it exploded
+    { "" => {"" =>'empty keyed value'}}[:[]=].should_not == 'empty keyed value'
+  end
 end

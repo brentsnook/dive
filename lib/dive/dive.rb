@@ -15,6 +15,10 @@ module Dive
   def symbolise key
     key.is_a?(Symbol) ? key : as_symbol(key)
   end
+  
+  def split_dive location
+    location.to_s.match /^([^\[\]]+)\[(.+)\]\s*$/ #(key)[(remainder)]
+  end
     
   module Read
     
@@ -37,8 +41,8 @@ module Dive
     end 
     
     def attempt_dive location
-      matches = location.to_s.match /([^\[\]]*)\[(.*)\]/ #(key)[(remainder)]
-      matches ? dive_to_next_level(matches[1].strip, matches[2].strip) : default_value(location)
+      split_location = split_dive location
+      split_location ? dive_to_next_level(split_location[1].strip, split_location[2].strip) : default_value(location)
     end
     
     def dive_to_next_level key, remainder
@@ -54,8 +58,8 @@ module Dive
     end
     
     def dive_store location, value
-      matches = location.to_s.match /([^\[\]]*)\[(.*)\]/
-      matches ? store_at_next_level(matches[1], matches[2], value): old_store(symbolise(location), value)
+      split_location = split_dive location
+      split_location ? store_at_next_level(split_location[1], split_location[2], value) : old_store(symbolise(location), value)
     end
     
     private
