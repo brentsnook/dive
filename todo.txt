@@ -1,7 +1,5 @@
-- ensure dive works in rspec build
-
 -- LATER --
 
+- add support for arrays
 - add can_dive? method - checks if there is a key
 - normal override overrides has_key? also
-- add support for arrays
