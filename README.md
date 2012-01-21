@@ -2,7 +2,9 @@
 
 Dive is a gem for accessing values within nested Hashes.
 
-Why? Well, it all started when I was mapping human readable names taken from a Cucumber table to fields in a JSON response:
+## Why?
+
+Well, it all started when I was mapping human readable names taken from a Cucumber table to fields in a JSON response:
 
 ```cucumber
 Given I have some sausages with
@@ -76,9 +78,9 @@ So I did.
 
 Check out the specs for how it behaves.
 
-Dive have been tested with ruby 1.9.2 and 1.8.7.
+Dive has been tested with ruby 1.9.2 and 1.8.7.
 
-### Installation and usage
+## Installation and usage
 
 ```ruby
 gem install dive
@@ -95,7 +97,10 @@ require 'dive/noninvasive'
 foods.dive ':sausages[:pork_and_fennel]'
 ```
 
-### Issues
+## A Note on Dive Keys
 
-* May not play well with other code that overrides core methods - my yardstick for this is enabling dive in the rspec builds and having them pass. Fails horribly at the moment
-
+Anything containing square brackets can be parsed as a Dive key, for example 
+```ruby
+'first[second]'
+```
+If you are experiencing strange behaviour while using dive to override Hash methods, please check that none of your keys are unintentionally being recognised as such. A test case for the unusual ones would be much appreciated.
