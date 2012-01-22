@@ -88,6 +88,7 @@ gem install dive
 require 'dive'
 foods = { :sausages => {:pork_and_fennel => 'DELICIOUS'}}
 foods[':sausages[:pork_and_fennel]']
+foods[':sausages[:coles_bbq]'] = 'YUCK'
 ```
 
 Or if you become squeamish at the idea of overriding Hash's [] method:
@@ -95,6 +96,7 @@ Or if you become squeamish at the idea of overriding Hash's [] method:
 ```ruby
 require 'dive/noninvasive'
 foods.dive ':sausages[:pork_and_fennel]'
+foods.dive_store ':sausages[:coles_bbq]', 'YUCK'
 ```
 
 ## A Note on Dive Keys
