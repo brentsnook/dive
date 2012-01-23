@@ -109,10 +109,15 @@ If you are experiencing strange behaviour while using dive to override Hash meth
 
 ## Coming up...
 
-* Array support - :sausages[0]
-* A better key format?
+* Array support -
 ```ruby
-'thing[blah][thing][0]'
-'thing.blah.thing.0'
-'thing/blah/thing/0'
+:sausages[0]
+```
+
+* A better key format?
+
+```ruby
+':sausages[0][:casing]'
+'sausages.0.casing'
+'sausages/0/casing'
 ```
