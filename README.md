@@ -106,3 +106,13 @@ Anything containing square brackets can be parsed as a Dive key, for example
 'first[second]'
 ```
 If you are experiencing strange behaviour while using dive to override Hash methods, please check that none of your keys are unintentionally being recognised as such. A test case for the unusual ones would be much appreciated.
+
+## Coming up...
+
+* Array support - :sausages[0]
+* A better key format?
+```ruby
+'thing[blah][thing][0]'
+'thing.blah.thing.0'
+'thing/blah/thing/0'
+```
