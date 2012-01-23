@@ -109,7 +109,8 @@ If you are experiencing strange behaviour while using dive to override Hash meth
 
 ## Coming up...
 
-* Array support -
+* Array support
+
 ```ruby
 :sausages[0]
 ```
