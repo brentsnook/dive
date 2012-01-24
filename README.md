@@ -99,6 +99,14 @@ foods.dive ':sausages[:pork_and_fennel]'
 foods.dive_store ':sausages[:coles_bbq]', 'YUCK'
 ```
 
+You can also put this in your Gemfile, but be careful to not have it automatically required:
+
+```ruby
+gem 'dive', :require => nil
+```
+
+If this gem is automatically loaded it may cause Hash access slowdown in your application.
+
 ## A Note on Dive Keys
 
 Anything containing square brackets can be parsed as a Dive key, for example 
